@@ -33,7 +33,15 @@
     "@types/supertest": "^6.0.0"
   },
   "keywords": ["typescript", "typing", "simulation", "mcp", "ai", "agent"],
-  "author": "Your Name",
+  "author": "ObisDevs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ObisDevs/node-typer-MCP.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ObisDevs/node-typer-MCP/issues"
+  },
+  "homepage": "https://github.com/ObisDevs/node-typer-MCP#readme",
   "license": "MIT",
   "files": ["dist", "README.md"],
   "engines": {

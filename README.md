@@ -1,5 +1,9 @@
 # node-typer
 
+[![npm version](https://badge.fury.io/js/node-typer.svg)](https://badge.fury.io/js/node-typer)
+[![CI](https://github.com/ObisDevs/node-typer-MCP/workflows/CI/badge.svg)](https://github.com/ObisDevs/node-typer-MCP/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A TypeScript-first typing simulation and type inference library with MCP adapter support for AI agents.
 
 ## Features
