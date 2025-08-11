@@ -1,37 +1,29 @@
-import { describe, it, expect, vi } from 'vitest';
-import request from 'supertest';
-import { app } from '../src/server.js';
+import { describe, it, expect } from 'vitest';
+import { server, adapter } from '../src/server.js';
 
 describe('MCP Server', () => {
-  it('should respond to health check', async () => {
-    const response = await request(app).get('/health');
-    expect(response.status).toBe(200);
-    expect(response.body.status).toBe('ok');
+  it('should initialize server', () => {
+    expect(server).toBeDefined();
+    expect(adapter).toBeDefined();
   });
 
-  it('should process MCP requests', async () => {
-    const spy = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
+  it('should process MCP adapter requests', async () => {
+    const response = await adapter.processRequest({
+      action: 'infer',
+      params: { value: 'test' }
+    });
     
-    const response = await request(app)
-      .post('/mcp/run')
-      .send({
-        action: 'infer',
-        params: { value: 'test' }
-      });
-    
-    expect(response.status).toBe(200);
-    expect(response.body.success).toBe(true);
-    expect(response.body.result.type).toBe('string');
-    
-    spy.mockRestore();
+    expect(response.success).toBe(true);
+    expect(response.result.type).toBe('string');
   });
 
   it('should handle invalid requests', async () => {
-    const response = await request(app)
-      .post('/mcp/run')
-      .send({});
+    const response = await adapter.processRequest({
+      action: 'invalid_action' as any,
+      params: {}
+    });
     
-    expect(response.status).toBe(400);
-    expect(response.body.success).toBe(false);
+    expect(response.success).toBe(false);
+    expect(response.error).toContain('Unknown action');
   });
 });

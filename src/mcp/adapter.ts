@@ -16,6 +16,8 @@ import { orchestratorBrain, type OrchestratorParams } from '../tools/orchestrato
 import { systemIntelligence, type SystemIntelligenceParams } from '../tools/system-intelligence.js';
 import { memoryBrain, type MemoryBrainParams } from '../tools/memory-brain.js';
 import { databaseIntelligence, type DatabaseIntelligenceParams } from '../tools/database-intelligence.js';
+import { SelfImprovementTool } from '../tools/self-improvement-tool.js';
+import { StripePaymentProcessor } from '../tools/stripe-payment-processor.js';
 
 export class MCPAdapter {
   private logger = createLogger({ animated: false });
@@ -183,6 +185,18 @@ export class MCPAdapter {
           if (!action) throw new Error('action parameter required');
           
           const result = await databaseIntelligence({ action, connection, query, schema_config, optimization_config, migration_config });
+          return { success: true, result };
+        }
+        
+        case 'self_improvement': {
+          const selfImprovementTool = new SelfImprovementTool();
+          const result = await selfImprovementTool.execute(request.params as any);
+          return { success: true, result };
+        }
+        
+        case 'stripe_payment_processor': {
+          const stripeProcessor = new StripePaymentProcessor();
+          const result = await stripeProcessor.execute(request.params as any);
           return { success: true, result };
         }
         

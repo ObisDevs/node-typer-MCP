@@ -1,6 +1,6 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
+import { CallToolRequestSchema, ListToolsRequestSchema, ListResourcesRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 import { MCPAdapter } from './mcp/index.js';
 
 const server = new Server({
@@ -8,6 +8,7 @@ const server = new Server({
   version: '1.0.0',
   capabilities: {
     tools: {},
+    resources: {},
   },
 });
 
@@ -272,8 +273,47 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           },
           required: ['action']
         }
+      },
+      {
+        name: 'self_improvement',
+        description: 'Analyze failures, create new tools, and improve existing tools',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            action: { type: 'string', enum: ['analyze_failure', 'create_tool', 'improve_tool', 'list_tools', 'backup_config'], description: 'Self-improvement action' },
+            task_description: { type: 'string', description: 'Description of failed task' },
+            failure_reason: { type: 'string', description: 'Reason for task failure' },
+            tool_name: { type: 'string', description: 'Name of tool to improve' },
+            improvement_type: { type: 'string', description: 'Type of improvement to apply' },
+            tool_definition: { type: 'object', description: 'Definition of new tool to create' }
+          },
+          required: ['action']
+        }
+      },
+      {
+        name: 'stripe_payment_processor',
+        description: 'Process payments using Stripe API with create, retrieve, capture, and refund capabilities',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            action: { type: 'string', enum: ['create_payment_intent', 'retrieve_payment', 'capture_payment', 'refund_payment'], description: 'Payment action' },
+            amount: { type: 'number', description: 'Amount in cents' },
+            currency: { type: 'string', description: 'Currency code' },
+            payment_method_id: { type: 'string', description: 'Payment method ID' },
+            payment_intent_id: { type: 'string', description: 'Payment intent ID' },
+            description: { type: 'string', description: 'Payment description' },
+            metadata: { type: 'object', description: 'Additional metadata' }
+          },
+          required: ['action']
+        }
       }
     ]
+  };
+});
+
+server.setRequestHandler(ListResourcesRequestSchema, async () => {
+  return {
+    resources: []
   };
 });
 
@@ -354,6 +394,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       break;
     case 'database_intelligence':
       action = 'database_intelligence';
+      params = args;
+      break;
+    case 'self_improvement':
+      action = 'self_improvement';
+      params = args;
+      break;
+    case 'stripe_payment_processor':
+      action = 'stripe_payment_processor';
       params = args;
       break;
     default:

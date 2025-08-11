@@ -1,5 +1,5 @@
 export interface MCPRequest {
-  action: 'typewrite' | 'infer' | 'cast' | 'log' | 'generate_n8n_workflow' | 'transform_data' | 'validate_data' | 'evaluate_expression' | 'manage_secrets' | 'web_intelligence' | 'cognitive_task' | 'cognitive_search' | 'analytics_brain' | 'vision_intelligence' | 'orchestrator_brain' | 'system_intelligence' | 'memory_brain' | 'database_intelligence' | 'self_improvement';
+  action: 'typewrite' | 'infer' | 'cast' | 'log' | 'generate_n8n_workflow' | 'transform_data' | 'validate_data' | 'evaluate_expression' | 'manage_secrets' | 'web_intelligence' | 'cognitive_task' | 'cognitive_search' | 'analytics_brain' | 'vision_intelligence' | 'orchestrator_brain' | 'system_intelligence' | 'memory_brain' | 'database_intelligence' | 'self_improvement' | 'stripe_payment_processor';
   params: Record<string, unknown>;
 }
 
@@ -37,4 +37,14 @@ export interface SelfImprovementParams {
   tool_name?: string;
   improvement_type?: string;
   tool_definition?: any;
+}
+
+export interface StripePaymentParams {
+  action: 'create_payment_intent' | 'retrieve_payment' | 'capture_payment' | 'refund_payment';
+  amount?: number;
+  currency?: string;
+  payment_method_id?: string;
+  payment_intent_id?: string;
+  description?: string;
+  metadata?: Record<string, any>;
 }

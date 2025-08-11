@@ -33,6 +33,7 @@ export interface CognitiveResponse {
 }
 
 import { SelfImprovementEngine, ImprovementAnalysis } from './self-improvement';
+import { ToolRegistry } from '../library/tool-registry';
 import { CognitiveMethods, SelfImprovementResult, RethinkResult } from './cognitive-core-methods';
 
 export class CognitiveBrain {
@@ -42,6 +43,7 @@ export class CognitiveBrain {
   private contextMemory = new Map<string, any>();
   private improvementEngine = new SelfImprovementEngine();
   private selfImprovementEnabled = true;
+  private toolRegistry = new ToolRegistry();
 
   constructor() {
     this.availableTools = new Set([
@@ -49,6 +51,9 @@ export class CognitiveBrain {
       'generate_n8n_workflow', 'transform_data', 'validate_data',
       'evaluate_expression', 'manage_secrets', 'web_intelligence', 'cognitive_search', 'analytics_brain', 'vision_intelligence', 'orchestrator_brain', 'system_intelligence', 'memory_brain', 'database_intelligence'
     ]);
+    
+    // Load dynamic tools from registry
+    this.loadDynamicTools();
   }
 
   async planTask(description: string, context: Record<string, any> = {}): Promise<CognitiveResponse> {
@@ -627,5 +632,20 @@ export class CognitiveBrain {
   
   setAutonomousMode(enabled: boolean): void {
     this.autonomousMode = enabled;
+  }
+  
+  private loadDynamicTools(): void {
+    try {
+      const dynamicTools = this.toolRegistry.getAllTools();
+      dynamicTools.forEach(tool => {
+        this.availableTools.add(tool.name);
+      });
+    } catch (error) {
+      console.warn('Failed to load dynamic tools:', error);
+    }
+  }
+  
+  addDynamicTool(toolName: string): void {
+    this.availableTools.add(toolName);
   }
 }
