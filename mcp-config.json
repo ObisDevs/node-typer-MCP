@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "node-typer": {
+      "command": "/usr/local/bin/node",
+      "args": ["/Users/macbookair/Desktop/node-typer/dist/server.js"],
+      "cwd": "/Users/macbookair/Desktop/node-typer"
+    }
+  }
+}
