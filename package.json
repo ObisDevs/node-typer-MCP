@@ -45,6 +45,6 @@
   "license": "MIT",
   "files": ["dist", "README.md"],
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   }
 }
