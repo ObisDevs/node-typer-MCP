@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { inferType, cast } from '../src/utils/index.js';
+import { inferType, cast } from '../src/utils/index';
 
 describe('Utils functionality', () => {
   it('should infer basic types', () => {

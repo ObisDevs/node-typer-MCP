@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { createLogger } from '../src/logger/index.js';
+import { createLogger } from '../src/logger/index';
 
 describe('Logger functionality', () => {
   it('should create logger with all methods', () => {

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { MCPAdapter } from '../src/mcp/index.js';
+import { MCPAdapter } from '../src/mcp/index';
 
 describe('MCP functionality', () => {
   const adapter = new MCPAdapter();

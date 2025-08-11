@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { typewrite, Typewriter } from '../src/core/index.js';
+import { typewrite, Typewriter } from '../src/core/index';
 
 describe('Core functionality', () => {
   it('should typewrite text', async () => {

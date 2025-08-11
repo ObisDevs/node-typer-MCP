@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { server, adapter } from '../src/server.js';
+import { server, adapter } from '../src/server';
 
 describe('MCP Server', () => {
   it('should initialize server', () => {
