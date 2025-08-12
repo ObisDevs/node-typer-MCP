@@ -17,6 +17,7 @@
     "dev": "tsup --watch",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:ci": "./test-ci.sh",
     "start": "node dist/server.js",
     "prepublishOnly": "npm run build"
   },
